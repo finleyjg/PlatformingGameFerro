@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class RobotMovement : MonoBehaviour
 {
-    public float movementSpeed = 5f; 
-    public float rotationSpeed = 10f; 
     private Vector3 movementDirection = Vector3.zero;
     private Animator anim;
     private Rigidbody rb;
-
+    public float movementSpeed = 10f; 
+    public float rotationSpeed = 10f;
     private RobotFreeAnim robotAnim;
 
     void Awake()
@@ -22,15 +21,13 @@ public class RobotMovement : MonoBehaviour
     void Update()
     {
         GetInput();
-        HandleMovement();
-        HandleRotation();
+        CharacterMovement();
     }
 
     void GetInput()
     {
         //wasd
         movementDirection = Vector3.zero;
-
         if (Input.GetKey(KeyCode.W))
         {
             movementDirection += Vector3.forward;
@@ -51,11 +48,12 @@ public class RobotMovement : MonoBehaviour
         movementDirection.Normalize(); //keeps same  speed
     }
 
-    void HandleMovement()
+    void CharacterMovement()
     {
         if (movementDirection.magnitude > 0)
         {
             Vector3 move = transform.TransformDirection(movementDirection) * movementSpeed * Time.deltaTime;
+            //deltatime ensures the player moves at a consistent speed independent of frame rate
             rb.MovePosition(transform.position + move);
             anim.SetBool("Walk_Anim", true);
             anim.speed = 1.25f; //to make the animation a little faster
@@ -67,13 +65,5 @@ public class RobotMovement : MonoBehaviour
         }
     }
 
-    void HandleRotation()
-    {
-        if (movementDirection.magnitude > 0)
-        {
-            float targetRotation = Mathf.Atan2(movementDirection.x, movementDirection.z) * Mathf.Rad2Deg;
-            Quaternion targetRotationQuat = Quaternion.Euler(0f, targetRotation, 0f);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotationQuat, rotationSpeed * Time.deltaTime);
-        }
-    }
+
 }

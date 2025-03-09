@@ -141,7 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cd7e105506e71b44bde4f76cceaab93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 75
+  movementSpeed: 10
   rotationSpeed: 75
 --- !u!54 &140520143
 Rigidbody:
@@ -224,9 +224,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71beb79fabc4f2a49933375077729b76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 5
-  rb: {fileID: 0}
-  groundCheckDistance: 0.1
 --- !u!1 &932346770
 GameObject:
   m_ObjectHideFlags: 0
@@ -382,8 +379,8 @@ MonoBehaviour:
   player: {fileID: 140520140}
   offset: {x: 0, y: 1, z: -4}
   rotationSpeed: 5
-  smoothSpeed: 0.125
-  verticalAngleLimit: 80
+  smoothingSpeed: 0.125
+  verticalAngleMax: 80
 --- !u!65 &932346776
 BoxCollider:
   m_ObjectHideFlags: 0
