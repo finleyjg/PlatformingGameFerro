@@ -7,21 +7,68 @@ public class RobotMovement : MonoBehaviour
     private Vector3 movementDirection = Vector3.zero;
     private Animator anim;
     private Rigidbody rb;
-    public float movementSpeed = 10f; 
+    public float movementSpeed = 10f;
     public float rotationSpeed = 10f;
     private RobotFreeAnim robotAnim;
+
+
+    public bool isGrounded = true;
+    public float jumpForce = 5f;
+    public float fallMultiplier = 2.5f;
+    public float lowJumpMultiplier = 2f;
+
+    void FixedUpdate()
+    {
+        if (rb.velocity.y < 0)
+        {
+            rb.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.fixedDeltaTime;
+        }
+        else if (rb.velocity.y > 0 && !Input.GetButton("Jump"))
+        {
+            rb.velocity += Vector3.up * Physics.gravity.y * (lowJumpMultiplier - 1) * Time.fixedDeltaTime;
+        }
+        //allows for short hop jumping, as well as realistic and responsive gravity simulation
+    }
+
+
+
 
     void Awake()
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
-        robotAnim = GetComponent<RobotFreeAnim>(); 
+        robotAnim = GetComponent<RobotFreeAnim>();
+    }
+
+    private void Start()
+    {
+        rb.GetComponent<Rigidbody>();
     }
 
     void Update()
     {
         GetInput();
         CharacterMovement();
+
+        if (Input.GetButtonDown("Jump") && isGrounded)
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            isGrounded = false;
+        }
+
+
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.tag == "Ground")
+        {
+            isGrounded = true;
+        }
+        else
+        {
+            isGrounded = true;
+        }
     }
 
     void GetInput()
@@ -32,15 +79,15 @@ public class RobotMovement : MonoBehaviour
         {
             movementDirection += Vector3.forward;
         }
-        if (Input.GetKey(KeyCode.S)) 
+        if (Input.GetKey(KeyCode.S))
         {
             movementDirection += Vector3.back;
         }
-        if (Input.GetKey(KeyCode.A)) 
+        if (Input.GetKey(KeyCode.A))
         {
             movementDirection += Vector3.left;
         }
-        if (Input.GetKey(KeyCode.D)) 
+        if (Input.GetKey(KeyCode.D))
         {
             movementDirection += Vector3.right;
         }
@@ -50,20 +97,23 @@ public class RobotMovement : MonoBehaviour
 
     void CharacterMovement()
     {
+        Vector3 move = movementDirection * movementSpeed * Time.deltaTime;
+        Vector3 targetPosition = rb.position + transform.TransformDirection(move);
+        rb.MovePosition(targetPosition);
+
+        
         if (movementDirection.magnitude > 0)
         {
-            Vector3 move = transform.TransformDirection(movementDirection) * movementSpeed * Time.deltaTime;
-            //deltatime ensures the player moves at a consistent speed independent of frame rate
-            rb.MovePosition(transform.position + move);
             anim.SetBool("Walk_Anim", true);
-            anim.speed = 1.25f; //to make the animation a little faster
+            anim.speed = 1.25f;
         }
         else
         {
             anim.SetBool("Walk_Anim", false);
-            anim.speed = 1f; //normal speed animation and walking animation stop
+            anim.speed = 1f;
         }
     }
-
-
 }
+
+
+
