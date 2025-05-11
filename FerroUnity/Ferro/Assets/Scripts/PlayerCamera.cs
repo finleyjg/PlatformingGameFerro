@@ -34,6 +34,7 @@ public class PlayerCamera : MonoBehaviour
         currentRotationY -= mouseY;
         currentRotationY = Mathf.Clamp(currentRotationY, -verticalMax, verticalMax);//stops camera rotating past the max
         requiredRotation = Quaternion.Euler(currentRotationY, currentRotationX, 0);
+
         requiredPosition = player.position + requiredRotation * offset;
         transform.position = Vector3.Lerp(transform.position, requiredPosition, smoothingSpeed);
         transform.rotation = Quaternion.Lerp(transform.rotation, requiredRotation, smoothingSpeed);

@@ -19,13 +19,13 @@ public class RobotMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (rb.velocity.y < 0)
+        if (rb.linearVelocity.y < 0)
         {
-            rb.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.fixedDeltaTime;
+            rb.linearVelocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.fixedDeltaTime;
         }
-        else if (rb.velocity.y > 0 && !Input.GetButton("Jump"))
+        else if (rb.linearVelocity.y > 0 && !Input.GetButton("Jump"))
         {
-            rb.velocity += Vector3.up * Physics.gravity.y * (lowJumpMultiplier - 1) * Time.fixedDeltaTime;
+            rb.linearVelocity += Vector3.up * Physics.gravity.y * (lowJumpMultiplier - 1) * Time.fixedDeltaTime;
         }
         //allows for short hop jumping, as well as realistic and responsive gravity simulation
     }
@@ -101,17 +101,26 @@ public class RobotMovement : MonoBehaviour
         Vector3 targetPosition = rb.position + transform.TransformDirection(move);
         rb.MovePosition(targetPosition);
 
-        
-        if (movementDirection.magnitude > 0)
+        if (!isGrounded)
         {
-            anim.SetBool("Walk_Anim", true);
-            anim.speed = 1.25f;
+            anim.SetBool("Walk_Anim", false); //Stops walk animation when jumping
+            anim.speed = 0f;                  //freeze
         }
         else
         {
+            if (movementDirection.magnitude > 0)
+            {
+            anim.SetBool("Walk_Anim", true);
+            anim.speed = 1.25f;
+            }
+            else
+            {
             anim.SetBool("Walk_Anim", false);
             anim.speed = 1f;
+            }
+
         }
+
     }
 }
 
