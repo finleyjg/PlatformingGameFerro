@@ -17,6 +17,8 @@ public class RobotMovement : MonoBehaviour
     public float fallMultiplier = 2.5f;
     public float lowJumpMultiplier = 2f;
 
+    public GyroJumpSound gyroJumpSound;
+
     void FixedUpdate()
     {
         if (rb.linearVelocity.y < 0)
@@ -54,6 +56,7 @@ public class RobotMovement : MonoBehaviour
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isGrounded = false;
+            gyroJumpSound.PlayJumpSound();
         }
 
 
@@ -121,6 +124,11 @@ public class RobotMovement : MonoBehaviour
 
         }
 
+    }
+
+    public void IncreaseMovementSpeed(float amount)
+    {
+        movementSpeed += amount;
     }
 }
 

@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GreenWorld.unity
     guid: 1b1cad850f6caf64aa27b7fccad8febe
+  - enabled: 1
+    path: Assets/Scenes/CaveWorld.unity
+    guid: aa2b9ff9fe6980b4e89158ac2f065d3a
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
