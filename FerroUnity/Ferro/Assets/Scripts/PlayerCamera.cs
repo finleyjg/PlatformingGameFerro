@@ -12,7 +12,13 @@ public class PlayerCamera : MonoBehaviour
     private float currentRotationX = 0f;
     private float currentRotationY = 0f; 
     private Quaternion requiredRotation; 
-    private Vector3 requiredPosition; 
+    private Vector3 requiredPosition;
+
+
+    void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
 
     void Start()//this part of the code finds the player, locks the cursor to them and also makes the cursor invisible
     {

@@ -37,6 +37,8 @@ public class RobotMovement : MonoBehaviour
 
     void Awake()
     {
+        DontDestroyOnLoad(gameObject);
+
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         robotAnim = GetComponent<RobotFreeAnim>();
@@ -130,6 +132,7 @@ public class RobotMovement : MonoBehaviour
     {
         movementSpeed += amount;
     }
+
 }
 
 
