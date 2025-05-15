@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour
 {
-    public Transform player;        
-    public Vector3 offset = new Vector3(0, 5, -10); 
-    public float rotationSpeed = 5f; 
-    public float smoothingSpeed = 0.2f; 
-    public float verticalMax = 90f; 
+    public Transform player;
+    public Vector3 offset = new Vector3(0, 5, -10);
+    public float rotationSpeed = 5f;
+    public float smoothingSpeed = 0.2f;
+    public float verticalMax = 90f;
     private float currentRotationX = 0f;
-    private float currentRotationY = 0f; 
-    private Quaternion requiredRotation; 
+    private float currentRotationY = 0f;
+    private Quaternion requiredRotation;
     private Vector3 requiredPosition;
 
 
@@ -24,17 +24,17 @@ public class PlayerCamera : MonoBehaviour
     {
         if (player == null)
         {
-            player = GameObject.FindGameObjectWithTag("Player").transform;  
+            player = GameObject.FindGameObjectWithTag("Player").transform;
         }
 
-        Cursor.lockState = CursorLockMode.Locked; 
-        Cursor.visible = false; 
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     void Update()
     {
-        float mouseX = Input.GetAxis("Mouse X") * rotationSpeed; 
-        float mouseY = Input.GetAxis("Mouse Y") * rotationSpeed; 
+        float mouseX = Input.GetAxis("Mouse X") * rotationSpeed;
+        float mouseY = Input.GetAxis("Mouse Y") * rotationSpeed;
 
         currentRotationX += mouseX;
         currentRotationY -= mouseY;
@@ -47,3 +47,6 @@ public class PlayerCamera : MonoBehaviour
         //linear interpolation - makes the camera move smoothly
     }
 }
+
+
+

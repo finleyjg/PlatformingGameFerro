@@ -16,6 +16,9 @@ public class RobotMovement : MonoBehaviour
     public float jumpForce = 5f;
     public float fallMultiplier = 2.5f;
     public float lowJumpMultiplier = 2f;
+    public bool canDoubleJump = false;
+    private bool hasDoubleJumped = false;
+
 
     public GyroJumpSound gyroJumpSound;
 
@@ -54,12 +57,23 @@ public class RobotMovement : MonoBehaviour
         GetInput();
         CharacterMovement();
 
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        if (Input.GetButtonDown("Jump"))
         {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            isGrounded = false;
-            gyroJumpSound.PlayJumpSound();
+            if (isGrounded)
+            {
+                rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                isGrounded = false;
+                hasDoubleJumped = false;
+                gyroJumpSound.PlayJumpSound();
+            }
+            else if (canDoubleJump && !hasDoubleJumped)
+            {
+                rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                hasDoubleJumped = true;
+                gyroJumpSound.PlayJumpSound();
+            }
         }
+
 
 
     }
@@ -109,7 +123,7 @@ public class RobotMovement : MonoBehaviour
         if (!isGrounded)
         {
             anim.SetBool("Walk_Anim", false); //Stops walk animation when jumping
-            anim.speed = 0f;                  //freeze
+            anim.speed = 0f;                  
         }
         else
         {

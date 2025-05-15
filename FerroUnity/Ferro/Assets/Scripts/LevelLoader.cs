@@ -17,7 +17,7 @@ public class LevelLoader : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        GameObject spawnPoint = GameObject.FindGameObjectWithTag("SpawnPoint");
+        GameObject spawnPoint = GameObject.FindGameObjectWithTag("spawn");
 
         if (player != null && spawnPoint != null)
         {
