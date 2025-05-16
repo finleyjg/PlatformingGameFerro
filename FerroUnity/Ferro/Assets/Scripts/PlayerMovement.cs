@@ -45,6 +45,7 @@ public class RobotMovement : MonoBehaviour
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         robotAnim = GetComponent<RobotFreeAnim>();
+        Application.targetFrameRate = 60;
     }
 
     private void Start()
